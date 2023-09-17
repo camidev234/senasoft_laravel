@@ -18,6 +18,9 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/user/index_user', [UserController::class, 'index_user'])->name('index.User');
 Route::get('/user/login', [UserController::class, 'userLogin'])->name('user.login');
+// Route::post('/user/log')
 Route::get('/user/sign-up', [UserController::class, 'userSign'])->name('user.sign_up');
 Route::post('/user/save_user', [UserController::class, 'saveUser'])->name('user.save_User');
+Route::post('/user/validateLog', [UserController::class, 'login'])->name('user.validate');

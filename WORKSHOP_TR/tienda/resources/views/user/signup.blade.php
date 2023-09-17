@@ -16,7 +16,7 @@
             <label for="name">Nombre: </label>
             <input type="text" placeholder="nombre" name="name"><br>
             <label for="email">Email: </label>
-            <input type="email" required name="email" placeholder="Correo Electronico"><br>
+            <input type="email" name="email" placeholder="Correo Electronico"><br>
             <label for="contra">Contraseña: </label>
             <input type="password" name="contra" placeholder="contraseña" required><br>
             <input type="submit" value="Crear usuario">
