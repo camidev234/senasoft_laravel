@@ -24,3 +24,8 @@ Route::get('/user/login', [UserController::class, 'userLogin'])->name('user.logi
 Route::get('/user/sign-up', [UserController::class, 'userSign'])->name('user.sign_up');
 Route::post('/user/save_user', [UserController::class, 'saveUser'])->name('user.save_User');
 Route::post('/user/validateLog', [UserController::class, 'login'])->name('user.validate');
+Route::get('/user/log_out', [UserController::class, 'logout'])->name('user.logout');
+
+Route::get('/user/login_required', function () {
+    return redirect()->route('user.login');
+})->name('login_required');
