@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('cargos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 33);
-            $table->unsignedBigInteger('Dep_id')->onDelete('cascade');
-            $table->foreign('Dep_id')->references('id')->on('departamentos');
-            $table->date('Fec_creacion');
+            $table->unsignedBigInteger('dep_id');
+            $table->foreign('dep_id')->references('id')->on('departamentos')->onDelete('cascade');
+            $table->date('fec_creacion');
             $table->timestamps();
         });
     }

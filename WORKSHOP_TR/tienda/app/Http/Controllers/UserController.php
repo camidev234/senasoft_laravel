@@ -13,8 +13,10 @@ class UserController extends Controller
 
     public function index_user(){
         $departamentos = Departamento::all();
-        $cargos = Cargo::all();
-        return view('/user/indexUser', compact('departamentos'), compact('cargos'));
+        $cargos = Cargo::join("departamentos", "departamentos.id", "=", "cargos.dep_id")
+        ->select('departamentos.nombre AS nombre_departamento', 'cargos.nombre', 'cargos.fec_creacion', 'cargos.id')
+        ->get();
+        return view('/user/indexUser', compact('departamentos', 'cargos'));
     }
     public function userSign(){
 
