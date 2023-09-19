@@ -12,45 +12,63 @@ class UserController extends Controller
 {
 
     public function index_user(){
+        // se guarda en la variable departamentos todos los registros de la tabla departamentos
+        //por medio del controlador
         $departamentos = Departamento::all();
+        /**
+         * la variable cargos es igual a un inner join
+         * el inner join devuelve el nombre_departamento, el nombre del cargo,
+         * la fecha de creacion del cargo
+         * y el id del cargo
+         * esos campos estaran en la variable cargos y estaran disponobles en la vista que retorna el metodo
+         */
         $cargos = Cargo::join("departamentos", "departamentos.id", "=", "cargos.dep_id")
         ->select('departamentos.nombre AS nombre_departamento', 'cargos.nombre', 'cargos.fec_creacion', 'cargos.id')
         ->get();
+        //retorna la vista indexUser y envia en un array asociativo las variables anteriores
         return view('/user/indexUser', compact('departamentos', 'cargos'));
     }
     public function userSign(){
-
+        // retorna la vista donde esta el formulario de registro
         return view('/user/signup');
     }
 
+    // la funcion saveUser requiere los campos del formulario ($inputs)
+    // esta funcion procesa los datos que introduce el usuario
     public function saveUser(Request $inputs){
+        // se instancia un nuevo objeto User
         $new_user = new User();
-
+        /**
+         * a ese nuevo usuario se accede a el nombre que es la columna en la base de datos
+         * despues esa columna va a ser igual a el request con el nombre del input del formulario.
+         * en este caso el nombre del input es name
+         * y asi para las demas columnas
+         */
         $new_user->name = $inputs->name;
         $new_user->email = $inputs->email;
         $new_user->password = $inputs->contra;
 
-        $arr_errores = [];
-        if(!$inputs->name){
-            $arr_errores[] = "Falta el nombre";
-        }
+        /**
+         * al request se le realiza una validacion
+         * al input name se le especifica que sea obligatorio
+         * al contra igual y tambien que tenga al menos 8 caracteres
+         * y al email solo obligatorio
+         */
 
-        if(!$inputs->email){
-            $arr_errores[] = "falta el email";
-        }
+        $inputs->validate([
+            'name' => ['required'],
+            'contra' => ['required', 'min:8'],
+            'email' => ['required']
+        ]);
 
-        if(!$inputs->contra){
-            $arr_errores[] = "falta la contraseña";
-        }
+        // se guarda el nuevo usuario
+        // por debajo save hace un INSERT
+        $new_user->save();
 
-        if(empty($arr_errores)){
-            $new_user->save();
+        // retorna una ruta que es el formulario de inicio de sesion
+        return redirect()->route('user.login');
 
 
-            return redirect()->route('user.login');
-        }else{
-            return redirect()->route('user.sign_up');
-        }
 
     }
 
@@ -60,6 +78,11 @@ class UserController extends Controller
 
     public function login(Request $request){
         $credentials = $request->only('email', 'password');
+
+        $request->validate([
+            'email' => ['required'],
+            'password' => ['required']
+        ]);
 
         if (Auth::attempt($credentials)) {
             // Autenticación exitosa

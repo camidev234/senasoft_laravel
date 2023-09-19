@@ -28,11 +28,19 @@
         @csrf
         <div class="mb-3">
             <label for="email" class="form-label">Email:</label>
-            <input type="email" class="form-control" name="email" id="email" required>
+            <input type="email" class="form-control" name="email" id="email" value="{{old('email')}}">
+            @error('email')
+                <br>
+                <small style="color: red;">Debes escribir el email</small>
+            @enderror
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Contraseña:</label>
-            <input type="password" class="form-control" name="password" id="password" required>
+            <input type="password" class="form-control" name="password" id="password" value="{{old('password')}}">
+            @error('password')
+                <br>
+                <small style="color: red;">Debes escribir la contraseña</small>
+            @enderror
         </div>
         <div class="mb-3">
             <button type="submit" class="btn btn-primary">Iniciar sesión</button>

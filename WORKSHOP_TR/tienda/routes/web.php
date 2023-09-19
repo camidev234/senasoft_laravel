@@ -21,7 +21,7 @@ Route::get('/', function () {
 });
 
 Route::get('/user/index_user', [UserController::class, 'index_user'])->name('index.User');
-Route::get('/user/login', [UserController::class, 'userLogin'])->name('user.login');
+Route::get('/user/login', [UserController::class, 'userLogin'])->name('user.login')->middleware('guest');
 // Route::post('/user/log')
 Route::get('/user/sign-up', [UserController::class, 'userSign'])->name('user.sign_up');
 Route::post('/user/save_user', [UserController::class, 'saveUser'])->name('user.save_User');
@@ -33,7 +33,7 @@ Route::get('/user/login_required', function () {
 })->name('login_required');
 
 
-route::get('/departamento/crear_dpto', [DepartamentoController::class, 'crear_dpto'])->name('dpto_crear_view');
+route::get('/departamento/crear_dpto', [DepartamentoController::class, 'crear_dpto'])->name('dpto_crear_view')->middleware('auth');
 route::post('/departamento/save_dpto', [DepartamentoController::class, 'salvar_dpto'])->name('dpto_salvar_route');
 route::get('/cargo/crear_cargo', [CargoController::class, 'crear_cargo'])->name('cargo_crear_view');
 route::post('/cargo/salvar_cargo', [CargoController::class, 'salvar_cargo'])->name('cargo_salvar_route');

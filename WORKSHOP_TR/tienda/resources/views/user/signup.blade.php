@@ -33,15 +33,27 @@
         @csrf
         <div class="mb-3">
             <label for="name" class="form-label">Nombre:</label>
-            <input type="text" class="form-control" name="name" placeholder="nombre">
+            <input type="text" class="form-control" name="name" placeholder="nombre" value="{{old('name')}}">
+            @error('name')
+                <br>
+                <small style="color: red;">El nombre es requerido</small>
+            @enderror
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email:</label>
-            <input type="email" class="form-control" name="email" placeholder="Correo Electronico">
+            <input type="email" class="form-control" name="email" placeholder="Correo Electronico" value="{{old('email')}}">
+            @error('email')
+                <br>
+                <small style="color: red;">El email es requerido</small>
+            @enderror
         </div>
         <div class="mb-3">
             <label for="contra" class="form-label">Contraseña:</label>
-            <input type="password" class="form-control" name="contra" placeholder="contraseña" required>
+            <input type="password" class="form-control" name="contra" placeholder="contraseña" value="{{old('contra')}}">
+            @error('contra')
+                <br>
+                <small style="color: red;">{{$message}}</small>
+            @enderror
         </div>
         <div class="mb-3">
             <input type="submit" class="btn btn-primary" value="Crear usuario">
